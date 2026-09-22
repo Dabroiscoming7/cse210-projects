@@ -9,26 +9,38 @@ class Program
         score = Console.ReadLine();
         string grade = score;
         int numberedGrade = int.Parse(grade);
+        string letter = "";
 
         if (numberedGrade >= 90)
         {
-            Console.WriteLine(" You got an A! congradulations you passed!");
+            letter = "A";
         }
         else if (numberedGrade >= 80)
         {
-            Console.WriteLine(" You got an B! congradulations you passed!");
+            letter = "B";
         }
         else if (numberedGrade >= 70)
         {
-            Console.WriteLine(" You got an C! congradulations you passed!");
+            letter = "C";
         }
         else if (numberedGrade >= 60)
         {
-            Console.WriteLine(" You got an D you weren't able to pass.");
+            letter = "D";
         }
         else
         {
-            Console.WriteLine(" You got an F you weren't able to pass.");
+            letter = "F";
+        }
+
+        Console.WriteLine($"Your grade is: {letter}");
+
+        if (numberedGrade >= 70)
+        {
+            Console.WriteLine("Congradulations you passed!");
+        }
+        else
+        {
+            Console.WriteLine("You failed, do better next time.");
         }
     }
 }
