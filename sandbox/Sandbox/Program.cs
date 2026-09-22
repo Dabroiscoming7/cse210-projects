@@ -21,5 +21,8 @@ class Program
         {
             Console.WriteLine("Default output");
         }
+
+        string numberString = "123";
+        int myNumber = int.Parse(numberString);
     }
 }
