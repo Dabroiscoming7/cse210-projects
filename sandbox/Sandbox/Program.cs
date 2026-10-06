@@ -49,16 +49,17 @@ class Program
         //     Console.WriteLine(i);
         // }
 
-        // Lists List<int> = new List<int>()
+        // Lists
+        // List<int> myNumbers = new List<int>();
 
-        List<string> myFriends = new List<string> {"Bob", "Betty", "Bubba"};
+        // List<string> myFriends = new List<string> {"Bob", "Betty", "Bubba"};
 
-        myFriends.Add("DougDoug");
+        // myFriends.Add("DougDoug");
 
-        foreach (string friend in myFriends)
-        {
-            Console.WriteLine(friend);
-        }
+        // foreach (string friend in myFriends)
+        // {
+        //     Console.WriteLine(friend);
+        // }
 
         // Functions
     }
