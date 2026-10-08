@@ -18,6 +18,7 @@ class JournalEntry
             "How was your day?",
             "Talk about someone you met."
         };
+        _prompt = prompts[0];
         _date = DateTime.Now.ToString();
         Console.WriteLine($"{_prompt}: ");
         _response = Console.ReadLine();
