@@ -13,8 +13,12 @@ class JournalEntry
     }
     public void CreateJournalEntry()
     {
+        string [] prompts =
+        {
+            "How was your day?",
+            "Talk about someone you met."
+        };
         _date = DateTime.Now.ToString();
-        _prompt = "How was your day?";
         Console.WriteLine($"{_prompt}: ");
         _response = Console.ReadLine();
 

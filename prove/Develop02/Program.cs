@@ -3,7 +3,7 @@ class Program
     static void Main(string[] args)
     {
         Menu myMenu = new Menu();
-        JournalEntry myEntry = new JournalEntry();
+        Journal myJournal = new Journal();
 
         int response = 0;
         while(response != 5)
@@ -12,10 +12,10 @@ class Program
             switch(response)
             {
                 case 1:
-                    myEntry.CreateJournalEntry();
+                    myJournal.CreateEntry();
                     break;
                 case 2:
-                    myEntry.DisplayJournalEntry();
+                    myJournal.DisplayJournal();
                     break;
                 case 3:
                     Console.WriteLine("Save");
