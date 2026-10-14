@@ -1,3 +1,5 @@
+// Exceeding requirements I have added a feauture for when the user clicks 5, 
+// the program will count how many entries there are.
 class Program
 {
     static void Main(string[] args)
@@ -6,7 +8,7 @@ class Program
         Journal myJournal = new Journal();
 
         int response = 0;
-        while(response != 5)
+        while(response != 6)
         {
             response = myMenu.ProcessMenu();
             switch(response)
@@ -18,12 +20,13 @@ class Program
                     myJournal.DisplayJournal();
                     break;
                 case 3:
-                    Console.WriteLine("Save");
-                    // Call ReadFromFile()
+                    myJournal.SaveToFile();
                     break;
                 case 4: 
-                    Console.WriteLine("Write");
-                    // Call WriteToFile()
+                    myJournal.LoadFromFile();
+                    break;
+                case 5:
+                    myJournal.CountEntries();
                     break;
             }
         }

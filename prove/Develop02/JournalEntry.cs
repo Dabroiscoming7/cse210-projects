@@ -16,12 +16,21 @@ class JournalEntry
         string [] prompts =
         {
             "How was your day?",
-            "Talk about someone you met."
+            "Did you meet someone new today?",
+            "Who did you interact with today?",
+            "Did you get all of your tasks done today?",
+            "Was there something that had went wrong today?"
         };
-        _prompt = prompts[0];
-        _date = DateTime.Now.ToString();
+
+        //Picks a random prompt
+        Random random = new Random();
+        int randomIndex = random.Next(prompts.Length);
+        _prompt = prompts[randomIndex];
+
+        //Current date
+        _date = DateTime.Now.ToShortDateString();
+
         Console.WriteLine($"{_prompt}: ");
         _response = Console.ReadLine();
-
     }
 }
