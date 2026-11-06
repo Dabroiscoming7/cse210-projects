@@ -1,52 +1,39 @@
-using System.Reflection.Metadata.Ecma335;
-
 class Scripture
 {
+    private Reference _reference;
     private List<Word> _words;
+    private Random _random = new Random();
 
-    // TODO - Add scripture Refrence
-
-    public Scripture (string bookName, int chapter, int verse, string text)
+    public Scripture(Reference reference, string text)
     {
-        _words = ConvertToWordList(text);
-        
-        _words[7].Hide();
-        //todo
-    }
-
-    public Scripture (string bookName, int chapter, int startverse, int endVerse, string text)
-    {
-        //todo
-    }
-
-    public void ShowScripture()
-    {
-        foreach(Word word in _words)
+        _reference = reference;
+        _words = new List<Word>();
+        foreach (string w in text.Split(' ', StringSplitOptions.RemoveEmptyEntries))
         {
-            word.Display();
+            _words.Add(new Word(w));
         }
     }
 
-    //TODO - Add constrctor for ScriptureRefrence
-
-    /***************************************
-    * ConvertToWordList() - this method will recieve a string parameter,
-    * which is a paragraph of text. It will split that text into words and
-    * add those words to a List<word> and return the list
-    ****************************************/
-
-    private List<Word> ConvertToWordList(string text)
+    public void HideRandomWords(int numberToHide)
     {
-        List<Word> tempWordList = new List<Word>();
-        string[] tempWords = text.Split(' ');
-        foreach(string w in tempWords)
-        {
-            Word tempWord = new Word(w);
-            tempWordList.Add(tempWord);
-        }
+        List<Word> visible = _words.Where(w => !w.IsHidden()).ToList();
 
-        return tempWordList;
+        for (int i = 0; i < numberToHide && visible.Count > 0; i++)
+        {
+            int index = _random.Next(visible.Count);
+            visible[index].Hide();
+            visible.RemoveAt(index);
+        }
     }
 
-    
+    public bool IsCompletelyHidden()
+    {
+        return _words.All(w => w.IsHidden());
+    }
+
+    public string GetDisplayText()
+    {
+        string text = string.Join(" ", _words.Select(w => w.GetDisplayText()));
+        return $"{_reference.GetDisplayText()} {text}";
+    }
 }
