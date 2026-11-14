@@ -1,39 +1,109 @@
-using System.Data;
-
 class BaseActivity
 {
     private int _duration;
-
     private DateTime _endTime;
-    public BaseActivity()
+    private bool _timerStarted;
+
+    protected void StartActivity(string name, string description)
     {
-        _duration = 30; // Replace with call to ObtainDuration();
+        Console.WriteLine($"\n{name}");
+        Console.WriteLine();
+        Console.WriteLine(description);
+        Console.WriteLine();
+        _duration = ObtainDuration();
+        Console.WriteLine("\nGet ready...");
+        RunSpinnerMessage("Prepare", 3);
+        Console.WriteLine();
     }
 
-    public void StartActivity()
+    private static int ObtainDuration()
     {
-        //Complete
+        while (true)
+        {
+            Console.Write("Enter the duration in seconds: ");
+            if (int.TryParse(Console.ReadLine(), out int duration) && duration > 0)
+            {
+                return duration;
+            }
+
+            Console.WriteLine("Please enter another number.");
+        }
     }
 
-    public void StartTimer()
+    protected void StartTimer()
     {
         _endTime = DateTime.Now.AddSeconds(_duration);
-    }
-    public bool HasTimerExpired()
-    {
-        return DateTime.Now > _endTime;
+        _timerStarted = true;
     }
 
-    public void RunCountDownMessage(string message, int seconds)
+    protected bool HasTimerExpired()
     {
-        Console.CursorVisible = false;
-        for(int i = seconds; i>0; i--)
+        if (!_timerStarted)
         {
-            Console.Clear();
-            Console.WriteLine($"{message} - {i}");
+            throw new InvalidOperationException("The activity timer has not started.");
+        }
+
+        return DateTime.Now >= _endTime;
+    }
+
+    protected static void RunCountdownMessage(string message, int seconds)
+    {
+        for (int i = seconds; i > 0; i--)
+        {
+            Console.WriteLine($"{message} {i}...");
             Thread.Sleep(1000);
         }
-        Console.CursorVisible = true;
+    }
+
+    protected void RunCountdownForActivity(string message, int seconds)
+    {
+        DateTime phaseEnd = DateTime.Now.AddSeconds(seconds);
+        Console.WriteLine(message);
+        while (!HasTimerExpired())
+        {
+            DateTime now = DateTime.Now;
+            TimeSpan delay = phaseEnd - now;
+            TimeSpan activityRemaining = _endTime - now;
+            if (activityRemaining < delay)
+            {
+                delay = activityRemaining;
+            }
+
+            if (delay <= TimeSpan.Zero)
+            {
+                break;
+            }
+
+            int remaining = (int)Math.Ceiling(delay.TotalSeconds);
+            Console.WriteLine($"{remaining}...");
+            if (delay > TimeSpan.FromSeconds(1))
+            {
+                delay = TimeSpan.FromSeconds(1);
+            }
+
+            Thread.Sleep(delay);
+        }
+    }
+
+    protected void RunSpinnerUntilActivityEnds(string message, int maxSeconds)
+    {
+        int remainingSeconds = Math.Max(0, (int)(_endTime - DateTime.Now).TotalSeconds);
+        int pauseSeconds = Math.Min(maxSeconds, remainingSeconds);
+        Console.Write($"{message} ");
+        if (pauseSeconds > 0 && !HasTimerExpired())
+        {
+            RunSpinnerMessage(message, pauseSeconds);
+        }
+
+        Console.WriteLine();
+    }
+
+    protected void EndActivity(string name)
+    {
+        Console.WriteLine("\nYou did a good job!");
+        Console.WriteLine($"\nYou have completed the {name} for {_duration} seconds.");
+        Console.WriteLine();
+        _timerStarted = false;
     }
 
     public void RunSpinnerMessage(string message, int seconds)
@@ -55,4 +125,5 @@ class BaseActivity
         }
         Console.CursorVisible = true;
     }
+
 }

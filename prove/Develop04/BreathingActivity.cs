@@ -1,23 +1,21 @@
 class BreathingActivity : BaseActivity
 {
-    public BreathingActivity(): base()
-    {
-        
-    }
     public void RunActivity()
     {
-        //call StartActivity() method
-        //DateTime endTime = DateTime.Now.AddSeconds(20); // delete later 
-        RunCountDownMessage("Get Ready", 5);
+        StartActivity(
+            "Breathing Activity",
+            "This activity will help you focus on breathing in and breathing out.");
+
         StartTimer();
-        //while (DateTime.Now < endTime)
-        while(! HasTimerExpired()) // Add when code is ready 
+        while (!HasTimerExpired())
         {
-            RunCountDownMessage("Breath in", 4);
-            RunCountDownMessage("Breath out", 6);
+            RunCountdownForActivity("Breathe in...", 5);
+            if (!HasTimerExpired())
+            {
+                RunCountdownForActivity("Breathe out...", 5);
+            }
         }
 
-
-        //Call EndActivity()
+        EndActivity("Breathing Activity Completed!");
     }
 }
