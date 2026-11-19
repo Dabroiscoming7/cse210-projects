@@ -4,10 +4,6 @@ abstract class Goal
     private string _description = " ";
     private int _points;
 
-    protected Goal()
-    {
-    }
-
     protected Goal(string name, string description, int points)
     {
         _name = name;
